@@ -24,3 +24,22 @@ while True:
 
 connection.close()
 server.close()
+import socket
+
+client = socket.socket()
+
+client.connect(("localhost", 9999))
+
+while True:
+    message = input("You: ")
+
+    client.send(message.encode())
+
+    if message.lower() == "exit":
+        break
+
+    reply = client.recv(1024).decode()
+
+    print("Server:", reply)
+
+client.close()
