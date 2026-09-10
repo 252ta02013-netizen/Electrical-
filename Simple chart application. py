@@ -1,0 +1,26 @@
+import socket
+
+server = socket.socket()
+
+server.bind(("localhost", 9999))
+server.listen(1)
+
+print("Waiting for connection...")
+
+connection, address = server.accept()
+
+print("Connected:", address)
+
+while True:
+    message = connection.recv(1024).decode()
+
+    if message.lower() == "exit":
+        break
+
+    print("Client:", message)
+
+    reply = input("You: ")
+    connection.send(reply.encode())
+
+connection.close()
+server.close()
